@@ -2,7 +2,7 @@ defmodule MyappWeb.Router do
   use MyappWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {MyappWeb.Layouts, :root}
@@ -19,7 +19,6 @@ defmodule MyappWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    resources "/users", UserController
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
   end
