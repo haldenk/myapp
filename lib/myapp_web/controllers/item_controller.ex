@@ -6,7 +6,8 @@ defmodule MyappWeb.ItemController do
 
   def index(conn, _params) do
     items = Todo.list_items()
-    render(conn, :index, items: items)
+    changeset = Todo.change_item(%Item{})
+    render(conn, "index.html", items: items, changeset: changeset)
   end
 
   def new(conn, _params) do
@@ -19,7 +20,7 @@ defmodule MyappWeb.ItemController do
       {:ok, item} ->
         conn
         |> put_flash(:info, "Item created successfully.")
-        |> redirect(to: ~p"/items/#{item}")
+        |> redirect(to: ~p"/items/")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset)
