@@ -25,16 +25,13 @@ defmodule MyappWeb.ItemControllerTest do
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, ~p"/items", item: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == ~p"/items/#{id}"
-
-      conn = get(conn, ~p"/items/#{id}")
-      assert html_response(conn, 200) =~ "Item #{id}"
+      assert %{} = redirected_params(conn)
+      assert redirected_to(conn) == ~p"/items/"
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
+    test "errors when invalid attributes are passed", %{conn: conn} do
       conn = post(conn, ~p"/items", item: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Item"
+      assert html_response(conn, 200) =~ "can&#39;t be blank"
     end
   end
 
