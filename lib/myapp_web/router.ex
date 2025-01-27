@@ -21,7 +21,9 @@ defmodule MyappWeb.Router do
     get "/", PageController, :home
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
+    get "/items/toggle/:id", ItemController, :toggle
     resources "/items", ItemController
+
   end
 
   # Other scopes may use custom stacks.

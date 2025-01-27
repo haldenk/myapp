@@ -35,11 +35,17 @@
       <%= for item <- @items do %>
   <li data-id={item.id} class={complete(item)}>
     <div class="view">
-      <%= if item.status == 1 do %>
-        <input class="toggle" type="checkbox" checked/>
-      <% else %>
-        <input class="toggle" type="checkbox"/>
-      <% end %>
+        <%= if item.status == 1 do %>
+    <.link href={~p"/items/toggle/#{item.id}"}
+        class="toggle checked">
+        type="checkbox"
+    </.link>
+  <% else %>
+    <.link href={~p"/items/toggle/#{item.id}"}
+        type="checkbox"
+        class="toggle">
+    </.link>
+  <% end %>
       <label><%= item.text %></label>
       <.link
         class="destroy"
