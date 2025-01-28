@@ -17,9 +17,16 @@ defmodule Myapp.Todo do
       [%Item{}, ...]
 
   """
-  def list_items do
-    Repo.all(Item)
-  end
+    def list_items do
+      query =
+        from(
+          i in Item,
+          select: i,
+          order_by: [asc: i.id]
+        )
+
+      Repo.all(query)
+    end
 
   @doc """
   Gets a single item.
