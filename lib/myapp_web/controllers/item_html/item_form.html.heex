@@ -1,9 +1,16 @@
-<.simple_form :let={f} for={@changeset} action={@action}>
-  <.error :if={@changeset.action}>
-    Oops, something went wrong! Please check the errors below.
-  </.error>
-  <.input field={f[:text]} type="text" label="Text" />
+<.simple_form :let={f} for={@changeset} method="put" action={~p"/items/#{@editing}"}>
+  <.input
+    field={{f, :text}}
+    type="text"
+    placeholder="what needs to be done?"
+    class="new-todo"
+  />
   <:actions>
-    <.button>Save Item</.button>
+    <.button
+    style="display: none;"
+    type="submit">
+      Save
+    </.button>
   </:actions>
+  <!-- submit the form using the Return/Enter key -->
 </.simple_form>
