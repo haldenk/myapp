@@ -23,6 +23,7 @@ defmodule MyappWeb.Router do
     get "/hello/:messenger", HelloController, :show
     get "/items/toggle/:id", ItemController, :toggle
     get "/items/filter/:filter", ItemController, :index
+    get "/items/clear", ItemController, :clear_completed
     resources "/items", ItemController
 
   end

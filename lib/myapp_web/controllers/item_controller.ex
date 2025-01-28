@@ -4,6 +4,11 @@ defmodule MyappWeb.ItemController do
   alias Myapp.Todo
   alias Myapp.Todo.Item
 
+  import Ecto.Query
+  alias Myapp.Repo
+
+
+
   def index(conn, params) do
     item = if not is_nil(params) and Map.has_key?(params, "id") do
       Todo.get_item!(params["id"])
@@ -39,10 +44,10 @@ defmodule MyappWeb.ItemController do
 
   def filter(items, str) do
     case str do
-      "items" -> items
+      "items" -> Enum.filter(items, fn i -> i.status !== 2 end)
       "active" -> Enum.filter(items, fn i -> i.status == 0 end)
       "completed" -> Enum.filter(items, fn i -> i.status == 1 end)
-      _ -> items
+      _ -> Enum.filter(items, fn i -> i.status !== 2 end)
     end
   end
 
@@ -89,6 +94,14 @@ defmodule MyappWeb.ItemController do
     Todo.update_item(item, %{status: toggle_status(item)})
     conn
     |> redirect(to: ~p"/items")
+  end
+
+  def clear_completed(conn, _param) do
+    person_id = 0
+    query = from(i in Item, where: i.person_id == ^person_id, where: i.status == 1)
+    Repo.delete_all(query, set: [status: 2])
+    # render the main template:
+    index(conn, %{filter: "all"})
   end
 
 end
