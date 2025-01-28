@@ -16,7 +16,7 @@
     <input id="toggle-all" class="toggle-all" type="checkbox" />
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-      <%= for item <- @items do %>
+      <%= for item <- filter(@items, @filter) do %>
   <li data-id={item.id} class={complete(item)}>
     <%= if item.status == 1 do %>
       <.link href={~p"/items/toggle/#{item.id}"}
@@ -33,8 +33,7 @@
   <div class="view">
     <%= if item.id == @editing.id do %>
       <%= edit(
-        assigns
-        |> Map.put(:action, ~p"/items/#{item.id}/edit")
+        Map.put(assigns, :action, ~p"/items/#{item.id}/edit")
         |> Map.put(:item, item)
       ) %>
     <% else %>
@@ -58,15 +57,43 @@
   <footer class="footer" style="display: block;">
     <span class="todo-count"><%= remaining_items(@items) %> items left</span>
     <ul class="filters">
-      <li>
-        <a href="#/" class="selected">All</a>
-      </li>
-      <li>
-        <a href="#/active">Active</a>
-      </li>
-      <li>
-        <a href="#/completed">Completed</a>
-      </li>
+        <li>
+    <%= if @filter == "items" do %>
+      <a href="/items/filter/items" class="selected">
+        All
+      </a>
+    <% else %>
+      <a href="/items/filter/items">
+        All
+      </a>
+    <% end %>
+  </li>
+  <li>
+    <%= if @filter == "active" do %>
+      <a href="/items/filter/active" class='selected'>
+        Active
+        [<%= Enum.count(filter(@items, "active")) %>]
+      </a>
+    <% else %>
+      <a href="/items/filter/active">
+        Active
+        [<%= Enum.count(filter(@items, "active")) %>]
+      </a>
+    <% end %>
+  </li>
+  <li>
+    <%= if @filter == "completed" do %>
+      <a href="/items/filter/completed" class='selected'>
+        Completed
+        [<%= Enum.count(filter(@items, "completed")) %>]
+      </a>
+    <% else %>
+      <a href="/items/filter/completed">
+        Completed
+        [<%= Enum.count(filter(@items, "completed")) %>]
+      </a>
+    <% end %>
+  </li>
     </ul>
     <button class="clear-completed" style="display: block;">
       Clear completed

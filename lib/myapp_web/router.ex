@@ -22,6 +22,7 @@ defmodule MyappWeb.Router do
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
     get "/items/toggle/:id", ItemController, :toggle
+    get "/items/filter/:filter", ItemController, :index
     resources "/items", ItemController
 
   end

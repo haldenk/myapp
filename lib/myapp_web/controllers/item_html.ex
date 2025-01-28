@@ -10,6 +10,15 @@ defmodule MyappWeb.ItemHTML do
     end
   end
 
+  def filter(items, str) do
+    case str do
+      "items" -> items
+      "active" -> Enum.filter(items, fn i -> i.status == 0 end)
+      "completed" -> Enum.filter(items, fn i -> i.status == 1 end)
+      _ -> items
+    end
+  end
+
   def remaining_items(items) do
     Enum.filter(items, fn i -> i.status == 0 end) |> Enum.count
   end

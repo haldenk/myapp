@@ -12,7 +12,12 @@ defmodule MyappWeb.ItemController do
     end
     items = Todo.list_items()
     changeset = Todo.change_item(item)
-    render(conn, "index.html", items: items, changeset: changeset, editing: item)
+    render(conn, "index.html",
+  items: items,
+  changeset: changeset,
+  editing: item,
+  filter: Map.get(params, "filter", "all")
+)
   end
 
   def new(conn, _params) do
@@ -29,6 +34,15 @@ defmodule MyappWeb.ItemController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset)
+    end
+  end
+
+  def filter(items, str) do
+    case str do
+      "items" -> items
+      "active" -> Enum.filter(items, fn i -> i.status == 0 end)
+      "completed" -> Enum.filter(items, fn i -> i.status == 1 end)
+      _ -> items
     end
   end
 
