@@ -3,6 +3,6 @@
   <:subtitle>Use this form to manage item records in your database.</:subtitle>
 </.header>
 
-<.item_form changeset={@changeset} action={~p"/items/#{@item}"} />
+<.item_form changeset={@changeset} method="put" action={~p"/items/#{@item}"} />
 
 <.back navigate={~p"/items"}>Back to items</.back>

@@ -33,7 +33,8 @@
   <div class="view">
     <%= if item.id == @editing.id do %>
       <%= edit(
-        Map.put(assigns, :action, ~p"/items/#{item.id}/edit")
+        assigns
+        |> Map.put(:action, ~p"/items/#{item.id}/edit")
         |> Map.put(:item, item)
       ) %>
     <% else %>

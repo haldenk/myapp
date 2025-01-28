@@ -1,6 +1,6 @@
-<.simple_form :let={f} for={@changeset} method="put" action={~p"/items/#{@editing}"}>
+<.simple_form :let={f} for={@changeset} method={@method} action={@action}>
   <.input
-    field={{f, :text}}
+    field={f[:text]}
     type="text"
     placeholder="what needs to be done?"
     class="new-todo"
